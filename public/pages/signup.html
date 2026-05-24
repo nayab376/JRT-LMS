@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>JRT SYSTEM | Create Account</title>
+  <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+
+<nav class="navbar">
+  <a class="logo" href="/">JRT <span>System</span></a>
+  <ul class="nav-links">
+    <li><a href="/">🏠 Home</a></li>
+    <li><a href="#">📋 Courses ▾</a></li>
+    <li><a href="#">ℹ️ About Us</a></li>
+    <li><a href="#">✉️ Contact</a></li>
+    <li><a href="#">🖥️ Online Tutoring (Free Trial)</a></li>
+  </ul>
+  <div class="nav-right">
+    <a class="btn-primary" href="/signup">Join Now</a>
+  </div>
+</nav>
+
+<div class="auth-page">
+  <div class="auth-card">
+    <h2>Create Account</h2>
+    <p class="subtitle">Fill in the details below to get started</p>
+
+    <label class="field-label" for="name">Full Name</label>
+    <input class="field-input" type="text" id="name" placeholder="Your full name"/>
+
+    <label class="field-label" for="email">Email Address</label>
+    <input class="field-input" type="email" id="email" placeholder="you@example.com"/>
+
+    <label class="field-label" for="password">Password</label>
+    <input class="field-input" type="password" id="password" placeholder="Min 8 characters"/>
+
+    <label class="field-label" for="confirm">Confirm Password</label>
+    <input class="field-input" type="password" id="confirm" placeholder="Re-enter password"/>
+
+    <label class="field-label">Select Role</label>
+    <div class="role-row">
+      <label><input type="radio" name="role" value="student" checked/> Student</label>
+      <label><input type="radio" name="role" value="instructor"/> Instructor</label>
+    </div>
+
+    <div class="error-box" id="err"></div>
+
+    <button class="btn-primary btn-full" id="signup-btn" onclick="handleSignup()">Sign Up</button>
+
+    <p class="auth-footer">Already have an account? <a href="/login">Log in</a></p>
+  </div>
+</div>
+
+<script src="/js/api.js"></script>
+<script>
+  async function handleSignup() {
+    const name     = document.getElementById('name').value.trim();
+    const email    = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const confirm  = document.getElementById('confirm').value;
+    const role     = document.querySelector('input[name="role"]:checked').value;
+
+    if (!name || !email || !password || !confirm) return showError('err', 'Please fill in all fields.');
+    if (password.length < 8) return showError('err', 'Password must be at least 8 characters.');
+    if (password !== confirm) return showError('err', 'Passwords do not match.');
+
+    setLoading('signup-btn', true);
+    const data = await API.post('/api/signup', { name, email, password, role });
+    setLoading('signup-btn', false);
+
+    if (data.error) return showError('err', data.error);
+
+    // Store email for OTP page
+    sessionStorage.setItem('otp_email', email);
+    window.location.href = '/otp';
+  }
+</script>
+</body>
+</html>

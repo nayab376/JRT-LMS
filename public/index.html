@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>JRT SYSTEM | Online Learning</title>
+  <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+
+<nav class="navbar">
+  <a class="logo" href="/">JRT <span>System</span></a>
+  <ul class="nav-links">
+    <li><a href="/">🏠 Home</a></li>
+    <li><a href="#">📋 Courses ▾</a></li>
+    <li><a href="#">ℹ️ About Us</a></li>
+    <li><a href="#">✉️ Contact</a></li>
+    <li><a href="#">🖥️ Online Tutoring (Free Trial)</a></li>
+  </ul>
+  <div class="nav-right" id="nav-right">
+    <a class="btn-primary" href="/signup">Join Now</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <h1>Introduction About Our<br><span>Digital Age</span></h1>
+    <p>Our Learning Management System helps you access courses, track your progress, and connect with instructors anytime, anywhere. Enjoy a structured, flexible, and engaging learning experience designed to support your academic and professional growth.</p>
+    <div class="hero-btns">
+      <a class="btn-primary" href="/login">Sign In</a>
+      <a class="btn-outline" href="#">Learn More</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="logo-big">C<span>|E</span></div>
+    <div class="logo-sub">TECHNOLOGY</div>
+    <div class="logo-lms">LMS</div>
+  </div>
+</section>
+
+<section class="features-section">
+  <div class="features-grid">
+    <div class="feat-card"><div class="feat-icon">🌍</div><h3>Global Learning</h3><p>Access world-class courses from anywhere at any time.</p></div>
+    <div class="feat-card"><div class="feat-icon">📚</div><h3>Rich Content</h3><p>Structured lessons, videos, quizzes and assignments in one place.</p></div>
+    <div class="feat-card"><div class="feat-icon">💻</div><h3>Online Tutoring</h3><p>Connect with expert instructors for live one-on-one coaching.</p></div>
+    <div class="feat-card"><div class="feat-icon">🤖</div><h3>AI-Powered</h3><p>Smart recommendations and progress tracking powered by AI.</p></div>
+  </div>
+</section>
+
+<script src="/js/api.js"></script>
+<script>
+  // If already logged in, show Dashboard/Logout buttons
+  API.get('/api/me').then(data => {
+    if (data.email) {
+      document.getElementById('nav-right').innerHTML =
+        `<a class="btn-primary" href="/dashboard">Dashboard</a>
+         <a class="btn-outline" href="#" onclick="logout()">Logout</a>`;
+    }
+  }).catch(() => {});
+
+  async function logout() {
+    await API.post('/api/logout', {});
+    location.reload();
+  }
+</script>
+</body>
+</html>

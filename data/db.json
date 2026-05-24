@@ -1,0 +1,50 @@
+{
+  "users": [
+    {
+      "id": "1779609652108",
+      "name": "nabu noor",
+      "email": "anufatima679@gmail.com",
+      "password": "$2b$10$KRmNWOTTAwU8fHZEbxbSjuQw6XgsN6dsuPVRN0akQjNOy8BRmzZIC",
+      "role": "student",
+      "verified": false,
+      "createdAt": "2026-05-24T08:00:52.109Z"
+    },
+    {
+      "id": "1779609973798",
+      "name": "Nayab Zaman FA23-BCS-024",
+      "email": "lahoreunit09@gmail.com",
+      "password": "$2b$10$0BJTPhiIzTn5HQ5/LzLpwOxHllhQyQQ1mW5LeeIyPRNyMX2ZXzeZq",
+      "role": "student",
+      "verified": false,
+      "createdAt": "2026-05-24T08:06:13.798Z"
+    },
+    {
+      "id": "1779610161300",
+      "name": "Nayab Zaman FA23-BCS-024",
+      "email": "nayabzaman024@gmail.com",
+      "password": "$2b$10$Z0yHmX6wxjEGZVAXDPg67.nbkymoQLBNO7cYJ3RvNfZAsWOCURPDa",
+      "role": "student",
+      "verified": false,
+      "createdAt": "2026-05-24T08:09:21.300Z"
+    }
+  ],
+  "otps": [
+    {
+      "email": "anufatima679@gmail.com",
+      "otp": "644667",
+      "expiry": 1779610508662
+    },
+    {
+      "email": "lahoreunit09@gmail.com",
+      "otp": "914671",
+      "expiry": 1779610573798
+    },
+    {
+      "email": "nayabzaman024@gmail.com",
+      "otp": "773243",
+      "expiry": 1779610761300
+    }
+  ],
+  "courses": [],
+  "enrollments": []
+}

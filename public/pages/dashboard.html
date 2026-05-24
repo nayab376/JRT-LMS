@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>JRT SYSTEM | Student Dashboard</title>
+  <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+
+<nav class="navbar">
+  <a class="logo" href="/">JRT <span>System</span></a>
+  <ul class="nav-links">
+    <li><a href="/">🏠 Home</a></li>
+    <li><a href="#">📋 Courses ▾</a></li>
+    <li><a href="#">ℹ️ About Us</a></li>
+    <li><a href="#">✉️ Contact</a></li>
+    <li><a href="#">🖥️ Online Tutoring (Free Trial)</a></li>
+  </ul>
+  <div class="nav-right">
+    <a class="btn-primary" href="/dashboard">Dashboard</a>
+    <a class="btn-outline" href="#" onclick="logout()">Logout</a>
+  </div>
+</nav>
+
+<div class="dashboard-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-profile">
+      <div class="sidebar-theme-pill">🌙 Late Night</div>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <div class="sidebar-avatar" id="avatar-initials">?</div>
+        <div>
+          <div class="sidebar-name" id="user-name">Loading...</div>
+          <div class="sidebar-email" id="user-email"></div>
+          <div class="sidebar-badge" id="user-role">Student</div>
+        </div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-item active" href="/dashboard">📊 Dashboard</a>
+      <a class="sidebar-item" href="#">👤 Profile</a>
+      <a class="sidebar-item" href="#">📚 Courses</a>
+      <a class="sidebar-item" href="#">📝 Assignments</a>
+      <a class="sidebar-item" href="#">🎯 Free Trials</a>
+      <a class="sidebar-item" href="#">📅 Coaching Sessions</a>
+      <a class="sidebar-item" href="#">💬 Chat</a>
+      <a class="sidebar-item" href="#">🔔 Notifications</a>
+      <a class="sidebar-item" href="#">📢 Announcements <span class="sidebar-dot"></span></a>
+      <a class="sidebar-item" href="#">🗒️ BlackBoard</a>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="dash-main">
+    <h1 class="dash-title">Welcome to the <span>Student Dashboard</span></h1>
+    <p class="dash-sub">
+      Access your enrolled courses, track your learning progress, and explore educational
+      resources — all in one personalized learning space designed for your success.
+    </p>
+    <p class="dash-updated" id="last-updated">Last updated: —</p>
+
+    <h2 class="section-title">Learning <span>Overview</span></h2>
+    <p class="section-sub">Monitor your academic performance, track course completion, and manage your learning journey.</p>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-label">My Courses</div>
+        <div class="stat-value" id="stat-courses">—</div>
+        <div class="stat-icon blue">📖</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Upcoming Assignments</div>
+        <div class="stat-value" id="stat-assignments">—</div>
+        <div class="stat-icon green">👥</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Scheduled Sessions</div>
+        <div class="stat-value" id="stat-sessions">—</div>
+        <div class="stat-icon purple">📅</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Overall Progress</div>
+        <div class="stat-value" id="stat-progress">—</div>
+        <div class="stat-icon amber">📈</div>
+      </div>
+    </div>
+
+    <div class="enrolled-title">Enrolled Courses</div>
+    <p class="enrolled-sub">Current courses you are enrolled in and your progress</p>
+    <div class="empty-courses" id="courses-container">
+      Loading courses...
+    </div>
+  </main>
+</div>
+
+<script src="/js/api.js"></script>
+<script>
+  async function loadDashboard() {
+    // Load user info
+    const user = await API.get('/api/me');
+    if (user.error) {
+      window.location.href = '/login';
+      return;
+    }
+
+    document.getElementById('user-name').textContent = user.name;
+    document.getElementById('user-email').textContent = user.email;
+    document.getElementById('user-role').textContent = user.role.charAt(0).toUpperCase() + user.role.slice(1);
+    document.getElementById('avatar-initials').textContent = user.name.charAt(0).toUpperCase();
+
+    // Load dashboard data
+    const dash = await API.get('/api/dashboard');
+    document.getElementById('stat-courses').textContent = dash.myCourses;
+    document.getElementById('stat-assignments').textContent = dash.upcomingAssignments;
+    document.getElementById('stat-sessions').textContent = dash.scheduledSessions;
+    document.getElementById('stat-progress').textContent = dash.overallProgress + '%';
+
+    const now = new Date();
+    document.getElementById('last-updated').textContent =
+      'Last updated: Today at ' + now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+    if (dash.enrolledCourses.length === 0) {
+      document.getElementById('courses-container').textContent =
+        'No enrolled courses yet. Browse available courses to get started.';
+    } else {
+      document.getElementById('courses-container').innerHTML = dash.enrolledCourses
+        .map(c => `<div style="padding:12px;border:1px solid #e5e7eb;border-radius:8px;margin-bottom:8px;">${c.title}</div>`)
+        .join('');
+    }
+  }
+
+  async function logout() {
+    await API.post('/api/logout', {});
+    window.location.href = '/';
+  }
+
+  loadDashboard();
+</script>
+</body>
+</html>
