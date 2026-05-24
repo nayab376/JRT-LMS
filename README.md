@@ -1,5 +1,38 @@
 # JRT SYSTEM LMS — Full Stack (Node.js + Express + JSON DB)
 
+
+
+
+<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/55d831d2-a14a-4933-b2d2-2b8c202f6618" />
+
+
+
+
+
+<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/fd7b6478-b95c-4f3a-9ded-a15922bd5d88" />
+
+
+
+
+<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/94084794-c264-470a-b2fe-3cb6f710520f" />
+
+
+
+
+
+<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/97c0147a-b395-45c0-8d6f-a5840d9b7d39" />
+
+
+
+<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/ba27c82e-d379-4bad-8f40-9967db1e4d82" />
+
+
+
+
+
+
+
+
 ## 📁 Folder Structure
 
 ```
